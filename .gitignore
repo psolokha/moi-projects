@@ -1,4 +1,4 @@
 # Project exclude paths
 /target/
 .idea
-src\main\java\test.java
+/src/main/java/test.java
