@@ -21,7 +21,7 @@ public class PropertiesManager {
         }
     }
 
-    /**Метод для использования класса как синглтона*/
+    /** Метод для использования класса как синглтона */
     public static Properties getProperties() {
         if (instance == null) instance = new PropertiesManager();
         return properties;

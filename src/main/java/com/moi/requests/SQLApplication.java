@@ -13,13 +13,13 @@ public class SQLApplication {
         connection = DBConnectionManager.getConnection();
     }
 
-    /**Метод для использования класса как синглтона*/
+    /** Метод для использования класса как синглтона */
     public static SQLApplication getInstance() {
         if (instance == null) instance = new SQLApplication();
             return instance;
     }
 
-    /**Метод, который отправляет в базу данных запрос, а возвращает данные в видел List'a Map'ов <String,String>*/
+    /** Метод, который отправляет в базу данных запрос, а возвращает данные в видел List'a Map'ов <String,String> */
     public List<Map<String, String>> executeQuery(String sqlQuery){
         Statement stmt = null;
         ResultSet rs = null;
@@ -45,26 +45,31 @@ public class SQLApplication {
             e.printStackTrace();
         }
         finally{
-            resultSetClose(rs);
+            closeResultSet(rs);
             closeStatement(stmt);
         }
         printer(results);
         return results;
     }
 
-    public void updateExecute(String query) {
+    /** Метод, который отправляет в базу запрос на создание/изменение данных
+     * и возвращает кол-во изменных строк */
+    public Integer updateExecute(String query) {
         Statement stmt = null;
+        Integer strNum = null;
         try {
             stmt = connection.createStatement();
-            stmt.executeUpdate(query);
+            strNum = stmt.executeUpdate(query);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {
             closeStatement(stmt);
         }
+        System.out.println("Кол-во обработаных строк: " + strNum);
+        return strNum;
     };
 
-    /**Метод, который выводит на экран результат SQL запроса*/
+    /** Метод, который выводит на экран результат SQL запроса */
     private void printer(List<Map<String, String>> resultSet) {
         for (Map<String, String> field : resultSet) {
             field.entrySet().forEach(entry -> System.out.print(entry.getKey() + ": " + entry.getValue() + '\t'));
@@ -72,7 +77,7 @@ public class SQLApplication {
         }
     }
 
-    /**Метод, закрывающий Statement*/
+    /** Метод, закрывающий Statement */
     private void closeStatement(Statement stmt) {
         if (stmt != null) {
             try {
@@ -83,8 +88,8 @@ public class SQLApplication {
         }
     }
 
-    /**Метод, закрывающий ResultSet*/
-    private void resultSetClose(ResultSet rs) {
+    /** Метод, закрывающий ResultSet */
+    private void closeResultSet(ResultSet rs) {
         if (rs != null) {
             try {
                 rs.close();

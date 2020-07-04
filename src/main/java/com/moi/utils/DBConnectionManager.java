@@ -20,7 +20,7 @@ public class DBConnectionManager {
         }
     }
 
-    /**Метод для использования класса как синглтона*/
+    /** Метод для использования класса как синглтона */
     public static Connection getConnection() {
         if (instance == null) instance = new DBConnectionManager();
         return connection;
