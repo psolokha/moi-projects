@@ -12,7 +12,7 @@ public class PropertiesManager {
 
     private PropertiesManager(){
         instance = this;
-        try (FileInputStream fis = new FileInputStream(new File("enviroment.property"))) {
+        try (FileInputStream fis = new FileInputStream(new File("enviroment.properties"))) {
             properties = new Properties();
             properties.load(fis);
         } catch (IOException e) {
