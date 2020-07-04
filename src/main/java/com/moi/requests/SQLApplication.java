@@ -52,6 +52,18 @@ public class SQLApplication {
         return results;
     }
 
+    public void updateExecute(String query) {
+        Statement stmt = null;
+        try {
+            stmt = connection.createStatement();
+            stmt.executeUpdate(query);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            closeStatement(stmt);
+        }
+    };
+
     /**Метод, который выводит на экран результат SQL запроса*/
     private void printer(List<Map<String, String>> resultSet) {
         for (Map<String, String> field : resultSet) {
